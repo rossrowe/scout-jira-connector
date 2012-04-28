@@ -1,0 +1,107 @@
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description} ${build.identifier}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+        <param name="configure.url">/plugins/servlet/customware/connector/config.action</param>
+    </plugin-info>
+
+    <!-- Import components from Atlassian SAL -->
+    <component-import key="pluginSettingsFactory"
+                      interface="com.atlassian.sal.api.pluginsettings.PluginSettingsFactory"/>
+    <component-import key="transactionTemplate" interface="com.atlassian.sal.api.transaction.TransactionTemplate"/>
+    <component-import key="userManager" interface="com.atlassian.sal.api.user.UserManager"/>
+    <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties"/>
+    <component-import key="i18nResolver" interface="com.atlassian.sal.api.message.I18nResolver"/>
+    <component-import key="loginUriProvider" interface="com.atlassian.sal.api.auth.LoginUriProvider"/>
+    <component-import key="templateRenderer" interface="com.atlassian.templaterenderer.TemplateRenderer"/>
+    <component-import key="pluginAccessor" interface="com.atlassian.plugin.PluginAccessor"/>
+    <component-import key="authenticationConfigurationManager"
+                      interface="com.atlassian.applinks.spi.auth.AuthenticationConfigurationManager"/>
+    <component-import key="cacheManager" interface="com.atlassian.cache.CacheManager"/>
+
+    <!-- Import Components from Core Connector -->
+    <component-import key="catalogueManager">
+        <description>Consumes the CustomWare Connector Suite's system integration catalogue provider.</description>
+        <interface>net.customware.plugins.connector.core.integration.manager.CatalogueManager</interface>
+    </component-import>
+    <component-import key="connectorLicenseManager">
+        <description>Consumes the CustomWare Connector Suite's system integration license provider.</description>
+        <interface>net.customware.plugins.connector.core.integration.manager.LicenseManager</interface>
+    </component-import>
+    <component-import key="configurationManager">
+        <description>Consumes the CustomWare Connector Suite's system integration configuration provider.</description>
+        <interface>net.customware.plugins.connector.core.integration.manager.ConfigurationManager</interface>
+    </component-import>
+
+    <component-import key="connectorRequestManager">
+        <description>Consumes the integration service provided by the core CustomWare Connector Suite.</description>
+        <interface>net.customware.plugins.connector.core.client.manager.ConnectorRequestManager</interface>
+    </component-import>
+
+    <component-import key="connectorJIRAUtil">
+        <description></description>
+        <interface>net.customware.plugins.connector.jira.util.ConnectorJIRAUtil</interface>
+    </component-import>
+
+    <component-import key="requestManager">
+        <description></description>
+        <interface>net.customware.plugins.connector.core.remote.manager.RequestManager</interface>
+    </component-import>
+
+    <component-import key="requestFactory">
+        <description></description>
+        <interface>com.atlassian.sal.api.net.RequestFactory</interface>
+    </component-import>
+
+    <component key="sauceLabsLicenseHelper"
+               name="SauceLabs License Helper"
+               class="net.customware.plugins.connector.saucelabs.license.SauceLabsLicenseHelper"
+               public="false">
+        <description></description>
+        <interface>net.customware.plugins.connector.core.integration.license.LicenseHelper</interface>
+    </component>
+
+    <component key="licenseUtil"
+               name="License Utility"
+               class="net.customware.plugins.connector.core.integration.license.util.LicenseUtil">
+    </component>
+
+    <!-- Declare custom system component -->
+    <customware-integration-manager key="SauceLabsIntegrationManager"
+                                    name="SauceLabs Integration Manager"
+                                    class="net.customware.plugins.connector.saucelabs.manager.impl.SauceLabsIntegrationManager"/>
+
+    <!-- Servlets -->
+
+    <!-- Admin Web Items -->
+
+
+    <!-- i18n -->
+    <resource type="i18n" name="saucelabs-i18n" location="net.customware.plugins.connector.saucelabs.i18n"/>
+
+    <!-- Declare custom system component -->
+
+
+    <!-- SauceLabs Specific -->
+
+    <applinks-application-type name="saucelabs" key="saucelabs"
+                               class="net.customware.plugins.connector.saucelabs.applinks.application.SauceLabsApplicationTypeImpl"
+                               interface="net.customware.plugins.connector.saucelabs.applinks.application.SauceLabsApplicationType">
+        <manifest-producer
+                class="net.customware.plugins.connector.saucelabs.applinks.application.SauceLabsManifestProducer"/>
+    </applinks-application-type>
+
+    <web-item key="saucelabs-submit" name="saucelabs Submission" section="saucelabs" weight="10">
+        <description key="item.saucelabs.submit.desc">Submit to SauceLabs</description>
+        <label key="item.saucelabs.submit.label"/>
+        <link linkId="saucelabs_submit"></link>
+    </web-item>
+
+
+    <!-- Web Resources -->
+    <web-resource key="applinks-images" name="Sauce Labs Images Resources">
+        <resource type="download" name="images/" location="net/customware/plugins/connector/saucelabs/images"/>
+    </web-resource>
+
+</atlassian-plugin>

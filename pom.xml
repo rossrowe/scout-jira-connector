@@ -1,0 +1,491 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.atlassian.pom</groupId>
+        <artifactId>atlassian-public-pom</artifactId>
+        <version>17</version>
+    </parent>
+
+    <groupId>net.customware.plugins.connector.saucelabs</groupId>
+    <artifactId>saucelabs-connector-plugin</artifactId>
+    <version>1.1-rc1</version>
+    <packaging>atlassian-plugin</packaging>
+    <name>CustomWare Sauce Labs Connector Plugin</name>
+    <description>Provides services for the CustomWare Connector suite to interact with Sauce Labs.</description>
+
+    <organization>
+        <name>CustomWare</name>
+        <url>http://www.customware.net</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <email>stephane@customware.net</email>
+            <name>Stephane</name>
+        </developer>
+    </developers>
+
+    <properties>
+        <build.identifier/>
+        <!-- The plugin key. This will be injected into the atlassian-plugins.xml
+     file when built. -->
+        <atlassian.plugin.key>${project.groupId}.${project.artifactId}</atlassian.plugin.key>
+        <atlassian.plugin.name>${project.name}</atlassian.plugin.name>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Atlassian common library versions -->
+        <refapp.version>2.8.8</refapp.version>
+        <applinks.version>3.3</applinks.version>
+        <ao.version>0.15</ao.version>
+
+        <!-- Version of the Atlassian Maven Plugin Suite (AMPS) -->
+        <amps.plugin.version>3.4</amps.plugin.version>
+
+        <!-- Framework dependency versions -->
+        <core.connector.version>1.1-rc1</core.connector.version>
+        <jira.connector.version>1.1-rc1</jira.connector.version>
+
+        <!-- Product specific versions used for testing -->
+        <!-- JIRA -->
+        <jira.version>5.0-rc1</jira.version>
+        <jira.ao.spi>activeobjects-jira-spi</jira.ao.spi>
+        <jira.data.version>${jira.version}</jira.data.version>
+        <jira.func-tests.version>${jira.version}</jira.func-tests.version>
+        <jira.context.path>/jira</jira.context.path>
+        <jira.port>2990</jira.port>
+        <jira.test-lib.exports.path>${basedir}/src/test/xml/</jira.test-lib.exports.path>
+        <jira.build.directory/>
+    </properties>
+
+    <dependencies>
+        <!-- AppLinks dependencies -->
+        <dependency>
+            <groupId>com.atlassian.applinks</groupId>
+            <artifactId>applinks-plugin</artifactId>
+            <version>${applinks.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.applinks</groupId>
+            <artifactId>applinks-spi</artifactId>
+            <version>${applinks.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.applinks</groupId>
+            <artifactId>applinks-api</artifactId>
+            <version>${applinks.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Active Objects for Data Persistence -->
+        <dependency>
+            <groupId>com.atlassian.activeobjects</groupId>
+            <artifactId>activeobjects-plugin</artifactId>
+            <version>${ao.version}</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.collections</groupId>
+                    <artifactId>google-collections</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.activeobjects</groupId>
+            <artifactId>${jira.ao.spi}</artifactId>
+            <version>${ao.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JIRA dependencies -->
+        <dependency>
+            <groupId>com.atlassian.jira</groupId>
+            <artifactId>atlassian-jira</artifactId>
+            <version>${jira.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Atlassian shared api dependencies -->
+        <dependency>
+            <groupId>com.atlassian.sal</groupId>
+            <artifactId>sal-api</artifactId>
+            <version>2.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.templaterenderer</groupId>
+            <artifactId>atlassian-template-renderer-api</artifactId>
+            <version>1.2.3</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JSON Marshalling Dependencies -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-xc</artifactId>
+            <version>1.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.8.1</version>
+        </dependency>
+
+        <!-- Active Objects for Data Persistence -->
+        <dependency>
+            <groupId>com.atlassian.activeobjects</groupId>
+            <artifactId>activeobjects-plugin</artifactId>
+            <version>${ao.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Additional common dependencies (bundled) -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Additional common dependencies (should be set to provided as we are using the
+    OSGi bundle instructions to make these available as opposed to bundling
+    it into each plugin) -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.15</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- CustomWare Connector Suite dependencies -->
+        <dependency>
+            <groupId>net.customware.plugins.connector.core</groupId>
+            <artifactId>core-connector-plugin</artifactId>
+            <version>${core.connector.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.customware.plugins.connector.atlassian</groupId>
+            <artifactId>jira-connector-plugin</artifactId>
+            <version>${jira.connector.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Spring dependencies (should be set to provided as we are using the
+            OSGi bundle instructions to make these available as opposed to bundling
+            it into each plugin) -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+            <version>2.5.6</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Atlassian dependencies (should be set to provided as we are using the
+    OSGi bundle instructions to make these available as opposed to bundling
+    it into each plugin) -->
+        <dependency>
+            <groupId>com.atlassian.cache</groupId>
+            <artifactId>atlassian-cache-api</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.plugins</groupId>
+            <artifactId>atlassian-plugins-core</artifactId>
+            <version>2.6.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Test Dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.6</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.jira</groupId>
+            <artifactId>jira-func-tests</artifactId>
+            <version>${jira.func-tests.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.collections</groupId>
+                    <artifactId>google-collections</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- OAuth dependencies -->
+        <dependency>
+            <groupId>net.oauth</groupId>
+            <artifactId>core</artifactId>
+            <version>20081027</version>
+        </dependency>
+
+        <!-- Licensing Dependencies -->
+        <!--<dependency>-->
+        <!--<groupId>org.apache.felix</groupId>-->
+        <!--<artifactId>org.osgi.core</artifactId>-->
+        <!--<version>1.0.0</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>net.customware.license</groupId>-->
+        <!--<artifactId>license-support</artifactId>-->
+        <!--<version>2.0.0</version>-->
+        <!--</dependency>-->
+
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>atlassian-m2-contrib</id>
+            <name>Atlassian Maven 2 Contributor Repository</name>
+            <url>https://maven.atlassian.com/contrib</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>atlassian-m2-repository</id>
+            <name>Atlassian Maven 2 Repository</name>
+            <url>https://maven.atlassian.com/repository/public</url>
+        </repository>
+        <repository>
+            <id>artifactory</id>
+            <name>artifactory Maven 2 Repository</name>
+            <url>http://artifactory.arane.us/artifactory/libs-releases-local</url>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>atlassian-m2-contrib</id>
+            <name>Atlassian Maven 2 Contributor Repository</name>
+            <url>http://svn.atlassian.com/svn/public/contrib/repository/maven2</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>1.0-beta-7</version>
+            </extension>
+        </extensions>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>atlassian-plugin.xml</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>atlassian-plugin.xml</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-jira-plugin</artifactId>
+                <version>${amps.plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <httpPort>${jira.port}</httpPort>
+                    <contextPath>${jira.context.path}</contextPath>
+                    <output>${project.build.directory}/jira-${jira.version}.log</output>
+                    <products>
+                        <product>
+                            <id>jira</id>
+                            <version>${jira.version}</version>
+                            <dataVersion>${jira.data.version}</dataVersion>
+                        </product>
+                    </products>
+                    <testGroups>
+                        <testGroup>
+                            <id>salesforce-jira</id>
+                            <productIds>
+                                <productId>jira</productId>
+                            </productIds>
+                            <includes>
+                                <include>it/**/*FuncTest.java</include>
+                            </includes>
+                        </testGroup>
+                    </testGroups>
+                    <pluginArtifacts>
+                        <!-- Atlassian dependencies -->
+                        <pluginArtifact>
+                            <groupId>com.atlassian.activeobjects</groupId>
+                            <artifactId>activeobjects-plugin</artifactId>
+                            <version>${ao.version}</version>
+                        </pluginArtifact>
+                        <pluginArtifact>
+                            <groupId>com.atlassian.activeobjects</groupId>
+                            <artifactId>${jira.ao.spi}</artifactId>
+                            <version>${ao.version}</version>
+                        </pluginArtifact>
+
+                        <!-- Connector dependencies -->
+                        <pluginArtifact>
+                            <groupId>net.customware.plugins.connector.core</groupId>
+                            <artifactId>core-connector-plugin</artifactId>
+                            <version>${core.connector.version}</version>
+                        </pluginArtifact>
+                        <pluginArtifact>
+                            <groupId>net.customware.plugins.connector.atlassian</groupId>
+                            <artifactId>jira-connector-plugin</artifactId>
+                            <version>${jira.connector.version}</version>
+                        </pluginArtifact>
+                    </pluginArtifacts>
+                    <pluginDependencies>
+                        <!-- Atlassian dependencies -->
+                        <pluginDependency>
+                            <groupId>com.atlassian.activeobjects</groupId>
+                            <artifactId>activeobjects-plugin</artifactId>
+                        </pluginDependency>
+
+                        <!-- Connector dependencies -->
+                        <pluginDependency>
+                            <groupId>net.customware.plugins.connector.core</groupId>
+                            <artifactId>core-connector-plugin</artifactId>
+                        </pluginDependency>
+                        <pluginDependency>
+                            <groupId>net.customware.plugins.connector.atlassian</groupId>
+                            <artifactId>jira-connector-plugin</artifactId>
+                        </pluginDependency>
+                    </pluginDependencies>
+                    <instructions>
+                        <Bundle-SymbolicName>${atlassian.plugin.key}</Bundle-SymbolicName>
+                        <Bundle-Name>${project.artifactId}</Bundle-Name>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Require-Bundle>
+                            com.atlassian.activeobjects.activeobjects-plugin,
+                            net.customware.plugins.connector.core.core-connector-plugin,
+                            net.customware.plugins.connector.atlassian.jira-connector-plugin
+                        </Require-Bundle>
+                        <Export-Package/>
+                        <Private-Package/>
+                        <Import-Package>
+                            com.atlassian.applinks.*,
+                            net.customware.plugins.connector.jira*;version="1.0.0",
+                            net.customware.plugins.connector.core*;version="1.0.0",
+                            net.customware.license*;version="1.0.0",
+                            javax.xml.namespace,
+                            javax.xml.rpc,
+                            org.apache.axis*,
+                            de.schlichtherle*,
+                            javax.security.auth.x500,
+                            *;resolution:=optional
+                        </Import-Package>
+                        <DynamicImport-Package/>
+                        <Spring-Context>*;timeout:=60</Spring-Context>
+                    </instructions>
+                    <systemPropertyVariables>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.6</version>
+            </plugin>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-clover2-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <targetPercentage>50%</targetPercentage>
+                    <cloverOutputDirectory>${project.build.directory}</cloverOutputDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.twdata.maven</groupId>
+                <artifactId>maven-cli-plugin</artifactId>
+                <version>1.0.6</version>
+                <configuration>
+                    <commands>
+                        <piq>resources compile com.atlassian.maven.plugins:atlassian-pdk:bundle-jars jar
+                            com.atlassian.maven.plugins:atlassian-pdk:install
+                        </piq>
+                        <pi>clean resources compile com.atlassian.maven.plugins:atlassian-pdk:bundle-jars jar
+                            com.atlassian.maven.plugins:atlassian-pdk:install
+                        </pi>
+                        <pu>com.atlassian.maven.plugins:atlassian-pdk:uninstall</pu>
+                    </commands>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <downloadSources>false</downloadSources>
+                    <downloadJavadocs>false</downloadJavadocs>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>cw36-repository</id>
+            <name>CustomWare Maven Repository</name>
+            <url>ftp://storage</url>
+        </repository>
+        <snapshotRepository>
+            <id>cw36-repository</id>
+            <name>CustomWare Maven Repository</name>
+            <url>ftp://storage</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>

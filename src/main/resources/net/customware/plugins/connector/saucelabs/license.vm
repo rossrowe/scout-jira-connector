@@ -1,0 +1,178 @@
+<html>
+	<head>
+		<title>$i18n.getText("license.installation.title", $i18n.getText("net.customware.plugins.connector.saucelabs.license.plugin.name"))</title>
+		<meta content="admin" name="decorator" />
+		<link rel="stylesheet" type="text/css" media="print"
+		      href="/styles/combined-printable.css">
+		<link type="text/css" rel="StyleSheet" media="all" href="/styles/combined.css"/>
+	</head>
+	<body>
+	<div style="background: #FFFFFF">
+		<br/>
+		<table class="jiraform maxWidth">
+			<tr>
+			    <td class="jiraformheader">
+			    	<h3 class="formtitle">$i18n.getText("license.installation.title", $i18n.getText("net.customware.plugins.connector.saucelabs.license.plugin.name"))</h3>
+		    	</td>
+			</tr>
+			<tr>
+			    <td class="jiraformbody">
+			        <p>
+			        $i18n.getText("license.installation.message", $i18n.getText("net.customware.plugins.connector.saucelabs.license.plugin.name"))
+				    </p>
+			    </td>
+		    </tr>
+		</table>
+		<br/>
+		<table class="jiraform maxWidth">
+			<tr>
+			    <td class="jiraformheader">
+			    	<h3 class="formtitle">$i18n.getText("license.installation.currentLicense")</h3>
+		    	</td>
+			</tr>
+			<tr>
+			    <td class="jiraformbody">
+			   		$action.updateLicenseCache() 
+					#if ($licenseContent)
+						#if ($licenseExpiring <= 30)
+                        <div class="formErrors">
+	                        <div class="warningBox">
+	                            $i18n.getText("license.installation.expiringWarning", [$licenseExpiring])
+	                        </div>
+                        </div>
+                        #elseif ($licenseExpiring <= 90)
+                        <div class="formErrors">
+	                        <div class="noteBox">
+	                            $i18n.getText("license.installation.expiringNote", [$licenseExpiring])
+	                        </div>
+                        </div>
+                        #end
+					
+						<table class="confluenceTable"> 
+						<tbody>
+						  <tr>
+							<th class="confluenceTh" align="right">
+							$i18n.getText("license.installation.subject"):
+							</th>
+							<td class="confluenceTd">
+							$licenseContent.subject
+							</td>
+						  </tr>
+						  #if ($licenseContent.issued)
+						  <tr>
+							<th class="confluenceTh">
+							$i18n.getText("license.installation.issueDate"):
+							</th>
+							<td class="confluenceTd">
+							$licenseContent.issued
+							</td>
+						  </tr>
+						  #end
+						  #if ($licenseContent.notBefore)
+						  <tr>
+							 <th class="confluenceTh">
+								$i18n.getText("license.installation.validFrom"):
+							 </th>
+							   <td class="confluenceTd">
+								$licenseContent.notBefore
+								</td>
+						  </tr>
+						  #end
+						  #if ($licenseContent.notAfter)
+							  <tr>
+								<th class="confluenceTh">
+									$i18n.getText("license.installation.validTo"):
+								</tf>
+								<td class="confluenceTd">
+									$licenseContent.notAfter
+								</td>
+							  </tr>
+						  #end
+						  <tr>
+							<th class="confluenceTh">
+							$i18n.getText("license.installation.issuer"):
+							</th>
+							<td class="confluenceTd">
+							$licenseContent.issuer
+							</td>
+						  </tr>
+						  <tr>
+							<th class="confluenceTh">
+							$i18n.getText("license.installation.holder"):
+							</th>
+							<td class="confluenceTd">
+							$licenseContent.holder
+							</td>
+						  </tr>
+
+						</tbody>
+						</table>
+
+						<form method="POST" onsubmit="return confirm('$i18n.getText("license.installation.uninstallConfirm")')">
+						<input type="submit" name="uninstall" value="$i18n.getText("license.installation.uninstall")"/>
+						</form>
+					<!-- if license present ends -->	
+					#else
+						<p><b>$i18n.getText("license.installation.noLicenseInstalled")</b></p>
+					#end
+			    </td>
+		    </tr>
+		</table>
+		<br/>
+       #if ($absoluteEulaPath)
+       <!-- End User Agreement --> 
+		<table class="jiraform maxWidth">
+			<tr>
+			    <td class="jiraformheader">
+			    	<h3 class="formtitle">$i18n.getText("license.installation.eula.title")</h3>
+		    	</td>
+			</tr>
+			<tr>
+			    <td class="jiraformbody">
+			        <p>
+                	$i18n.getText("license.installation.eula.description", [$i18n.getText("net.customware.plugins.connector.saucelabs.license.plugin.name"), $absoluteEulaPath])
+				    </p>
+			    </td>
+		    </tr>
+		</table>		
+		<br/>
+       #end
+		<table class="jiraform maxWidth">
+			<tr>
+			    <td class="jiraformheader">
+			    	<h3 class="formtitle">$i18n.getText("license.installation.newLicense")</h3>
+		    	</td>
+			</tr>
+			<tr>
+			    <td class="jiraformbody">
+					<!-- TODO: Display error messages -->
+					#if ($hasErrorMessages)
+					<div class="formErrors">
+						<div class="errorArea">
+						<h4>$i18n.getText("license.installation.errors.description")</h4>
+						</div>
+						<ul>
+						#foreach( $message in $errorMessages )
+							<li>$message</li>
+						#end
+						</ul>
+					</div>
+					#end
+
+					<form method="POST" enctype="multipart/form-data">
+						<p>
+						$i18n.getText("license.installation.instructions", $i18n.getText("net.customware.plugins.connector.saucelabs.license.plugin.name"))
+						</p>
+						<p>
+						<b>$i18n.getText("license.installation.licenseFile"):</b>
+						<input type="file" name="licenseFile"/>
+						<input type="submit" name="upload" value="$i18n.getText("license.installation.upload")"/>
+						</p>
+					</form>
+			    </td>
+		    </tr>
+		</table>
+		<br/>
+	</div>
+	</body>
+</html>
