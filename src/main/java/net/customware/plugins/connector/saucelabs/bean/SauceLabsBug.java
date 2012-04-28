@@ -13,22 +13,22 @@ import java.util.Map;
 public class SauceLabsBug {
 
 
-    private Map<String, String> attributes;
+    private Map<String, Object> attributes;
 
     public SauceLabsBug() {
         super();
     }
 
-    public SauceLabsBug(Map<String, String> attributes) {
+    public SauceLabsBug(Map attributes) {
         super();
         this.attributes = attributes;
     }
 
-    public Map<String, String> getAttributes() {
+    public Map<String, Object> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(Map<String, String> attributes) {
+    public void setAttributes(Map<String, Object> attributes) {
         this.attributes = attributes;
     }
 

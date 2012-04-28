@@ -364,9 +364,17 @@ public class DefaultSauceLabsManager extends AbstractRemoteManager implements Sa
         }
         RemoteBean bean = new RemoteBean();
         bean.setObjectType("1"); // Bug object type
-        bean.setId(bug.getAttributes().get("id")); // Saucelabs bug Id
-        for (Entry<String, String> currentAttribute : bug.getAttributes().entrySet()) {
-            bean.setAttribute(currentAttribute.getKey(), currentAttribute.getValue());
+        bean.setId((String) bug.getAttributes().get("id")); // Saucelabs bug Id
+        for (Entry<String, Object> currentAttribute : bug.getAttributes().entrySet()) {
+            if (currentAttribute.getKey().equals("CreationTime")) {
+                Calendar calendar = Calendar.getInstance();
+                int timestamp = (Integer) currentAttribute.getValue();
+                //Creation time is missing last 3 digits, so append 000 to the end of the value
+                calendar.setTimeInMillis(Long.valueOf(timestamp) * 1000);
+                bean.setAttribute(currentAttribute.getKey(), DateUtils.format(calendar.getTime(), DateUtils.COMMON_DATE_FORMAT));
+            } else {
+                bean.setAttribute(currentAttribute.getKey(), currentAttribute.getValue());
+            }
         }
 
         return bean;
