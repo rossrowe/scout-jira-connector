@@ -26,8 +26,8 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:rossrowe/scout-jira-connector.git</connection>
-        <!--<developerConnection>scm:git:git@github.com:rossrowe/scout-jira-connector.git</developerConnection>-->
+        <connection>scm:git:git://github.com:rossrowe/scout-jira-connector.git</connection>
+        <developerConnection>scm:git:git@github.com:rossrowe/scout-jira-connector.git</developerConnection>
         <!--<url>git@github.com:rossrowe/scout-jira-connector.git</url>-->
     </scm>
 
