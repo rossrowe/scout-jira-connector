@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.customware.plugins.connector.saucelabs</groupId>
     <artifactId>saucelabs-connector-plugin</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
     <packaging>atlassian-plugin</packaging>
     <name>CustomWare Sauce Labs Connector Plugin</name>
     <description>Provides services for the CustomWare Connector suite to interact with Sauce Labs.</description>
@@ -40,7 +39,7 @@
     </distributionManagement>
 
     <properties>
-        <build.identifier/>
+        <build.identifier />
         <!-- The plugin key. This will be injected into the atlassian-plugins.xml
      file when built. -->
         <atlassian.plugin.key>${project.groupId}.${project.artifactId}</atlassian.plugin.key>
@@ -68,7 +67,7 @@
         <jira.context.path>/jira</jira.context.path>
         <jira.port>2990</jira.port>
         <jira.test-lib.exports.path>${basedir}/src/test/xml/</jira.test-lib.exports.path>
-        <jira.build.directory/>
+        <jira.build.directory />
     </properties>
 
     <dependencies>
@@ -420,8 +419,8 @@
                             net.customware.plugins.connector.core.core-connector-plugin,
                             net.customware.plugins.connector.atlassian.jira-connector-plugin
                         </Require-Bundle>
-                        <Export-Package/>
-                        <Private-Package/>
+                        <Export-Package />
+                        <Private-Package />
                         <Import-Package>
                             com.atlassian.applinks.*,
                             net.customware.plugins.connector.jira*;version="1.0.0",
@@ -434,7 +433,7 @@
                             javax.security.auth.x500,
                             *;resolution:=optional
                         </Import-Package>
-                        <DynamicImport-Package/>
+                        <DynamicImport-Package />
                         <Spring-Context>*;timeout:=60</Spring-Context>
                     </instructions>
                     <systemPropertyVariables>
