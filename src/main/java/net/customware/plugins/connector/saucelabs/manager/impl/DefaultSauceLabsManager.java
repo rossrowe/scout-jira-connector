@@ -3,6 +3,7 @@ package net.customware.plugins.connector.saucelabs.manager.impl;
 import com.atlassian.sal.api.message.I18nResolver;
 import com.atlassian.sal.api.user.UserManager;
 import com.google.common.base.Joiner;
+import com.saucelabs.saucerest.SauceREST;
 import net.customware.plugins.connector.core.exception.ConnectorException;
 import net.customware.plugins.connector.core.exception.ConnectorIOException;
 import net.customware.plugins.connector.core.integration.bean.DefaultMappingBean;
@@ -253,24 +254,10 @@ public class DefaultSauceLabsManager extends AbstractRemoteManager implements Sa
 
     public void testConnection() throws ConnectorException {
         // Validate username and access-key for fetching the bug data
-        String url = getUrl() + "/validate?" + getToken();
-        LOG.debug("SauceLabs Test URL=" + url);
-
-        GetMethod method = new GetMethod(url);
-        try {
-            int response = getClient().executeMethod(method);
-            method.getResponseBodyAsString();
-
-            if (response != 200) {
-
-                throw new ConnectorIOException("Error code " + response + " received while authenticating to SauceLabs," + " response received: " + method.getResponseBodyAsString());
-            }
-        } catch (ConnectorException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new ConnectorIOException(e);
+        String results = new SauceREST(getUsername(), getPassword()).retrieveResults("tunnels");
+        if (StringUtils.isEmpty(results)) {
+            throw new ConnectorIOException("Error received while authenticating with Sauce Labs");
         }
-
     }
 
     protected String[] convertCollectionToStringArray(Collection col) {
