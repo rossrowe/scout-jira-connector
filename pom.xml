@@ -47,8 +47,8 @@
         <!-- Version of the Atlassian Maven Plugin Suite (AMPS) -->
         <amps.plugin.version>3.4</amps.plugin.version>
         <!-- Framework dependency versions -->
-        <core.connector.version>1.1</core.connector.version>
-        <jira.connector.version>1.1</jira.connector.version>
+        <core.connector.version>1.2.3</core.connector.version>
+        <jira.connector.version>1.2.3</jira.connector.version>
         <!-- Product specific versions used for testing -->
         <!-- JIRA -->
         <jira.version>5.0-beta1</jira.version>
