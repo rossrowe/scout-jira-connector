@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.customware.plugins.connector.saucelabs</groupId>
     <artifactId>saucelabs-connector-plugin</artifactId>
-    <version>1.4-SNAPSHOT</version>
+    <version>1.4</version>
     <packaging>atlassian-plugin</packaging>
     <name>CustomWare Sauce Labs Connector Plugin</name>
     <description>Provides services for the CustomWare Connector suite to interact with Sauce Labs.</description>
@@ -51,7 +51,7 @@
         <jira.connector.version>1.2.3</jira.connector.version>
         <!-- Product specific versions used for testing -->
         <!-- JIRA -->
-        <jira.version>5.0-beta1</jira.version>
+        <jira.version>6.0-OD-06</jira.version>
         <jira.ao.spi>activeobjects-jira-spi</jira.ao.spi>
         <jira.data.version>${jira.version}</jira.data.version>
         <jira.func-tests.version>${jira.version}</jira.func-tests.version>

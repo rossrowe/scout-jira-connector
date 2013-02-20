@@ -247,11 +247,6 @@ public class DefaultSauceLabsManager extends AbstractRemoteManager implements Sa
         return Collections.emptyList();
     }
 
-    public RemoteQuery getSelectByIDQueryForObject(String objectType, String id) {
-        ConditionExpression expression = new ConditionExpression("ID", ConditionExpression.EQUALS, id);
-        return new RemoteQuery(objectType, expression);
-    }
-
     public void testConnection() throws ConnectorException {
         // Validate username and access-key for fetching the bug data
         String results = new SauceREST(getUsername(), getPassword()).retrieveResults("tunnels");
@@ -395,5 +390,18 @@ public class DefaultSauceLabsManager extends AbstractRemoteManager implements Sa
             return subject.toString();
         }
         return super.formatObjectForDisplay(remoteBean);
+    }
+
+    public RemoteQuery getSelectByIDQueryForObject(String objectType, String id, HashSet<String> mappedFields) {
+        ConditionExpression expression = new ConditionExpression("Id", "=", new Object[]{id});
+        return new RemoteQuery(objectType, expression, mappedFields);
+    }
+
+    public RemoteFetchResponseBean getAttachments(RemoteBean remoteBean) {
+        return new RemoteFetchResponseBean(null, new String[]{"Attachment synchronization is not available for " + remoteBean.getObjectType()});
+    }
+
+    public boolean supportsMultisync() {
+        return true;
     }
 }
