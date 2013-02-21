@@ -139,7 +139,7 @@ public class DefaultSauceLabsManager extends AbstractRemoteManager implements Sa
     public RemoteFetchResponseBean fetch(RemoteQuery query) {
         if (query.getConditions().isExpression()) {
             ConditionExpression expression = (ConditionExpression) query.getConditions();
-            if (expression.getField().equals("ID")) {
+            if (expression.getField().equalsIgnoreCase("ID")) {
                 try {
                     SauceLabsBug bug = getBugForID((String) expression.getValues()[0]);
                     Collection<RemoteBean> results = new ArrayList<RemoteBean>();
