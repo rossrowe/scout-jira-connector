@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.customware.plugins.connector.saucelabs</groupId>
     <artifactId>saucelabs-connector-plugin</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.4-SNAPSHOT</version>
     <packaging>atlassian-plugin</packaging>
     <name>CustomWare Sauce Labs Connector Plugin</name>
     <description>Provides services for the CustomWare Connector suite to interact with Sauce Labs.</description>
