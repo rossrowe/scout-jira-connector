@@ -75,10 +75,10 @@
         </dependency>
         <!--&lt;!&ndash; AppLinks dependencies &ndash;&gt;-->
         <dependency>
-        <groupId>com.atlassian.applinks</groupId>
-        <artifactId>applinks-spi</artifactId>
-        <version>${applinks.version}</version>
-        <scope>provided</scope>
+            <groupId>com.atlassian.applinks</groupId>
+            <artifactId>applinks-spi</artifactId>
+            <version>${applinks.version}</version>
+            <scope>provided</scope>
         </dependency>
         <!--<dependency>-->
         <!-- Active Objects for Data Persistence -->
@@ -469,6 +469,12 @@
                 <configuration>
                     <goals>deploy</goals>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-amps-plugin</artifactId>
+                <version>${amps.version}</version>
+                <extensions>true</extensions>
             </plugin>
         </plugins>
     </build>
