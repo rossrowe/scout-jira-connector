@@ -303,8 +303,7 @@ public class DefaultSauceLabsManager extends AbstractRemoteManager implements Sa
             String jsonUpdate = JSONMarshallingUtil.marshall(tmpAttribs);
             LOG.debug("Sauce Labs update request=" + url + " params:update/" + jsonUpdate);
             method.addParameter("update", jsonUpdate);
-            RemoteUpdateRecord result = new RemoteUpdateRecord();
-            result.setId(remoteBean.getId());
+            RemoteUpdateRecord result = new RemoteUpdateRecord(remoteBean.getId());
             try {
                 int response = getClient().executeMethod(method);
                 LOG.debug("Sauce Labs update response=" + method.getResponseBodyAsString());

@@ -37,7 +37,7 @@
         <build.identifier />
         <!-- The plugin key. This will be injected into the atlassian-plugins.xml
      file when built. -->
-        <jira.version>6.2.5</jira.version>
+        <jira.version>7.0-OD2</jira.version>
         <amps.version>4.2.20</amps.version>
         <plugin.testrunner.version>1.1.4</plugin.testrunner.version>
         <!-- TestKit version 5.x for JIRA 5.x, 6.x for JIRA 6.x -->
@@ -52,11 +52,11 @@
         <!-- Version of the Atlassian Maven Plugin Suite (AMPS) -->
         <amps.plugin.version>3.4</amps.plugin.version>
         <!-- Framework dependency versions -->
-        <core.connector.version>1.4.9</core.connector.version>
-        <jira.connector.version>1.4.9</jira.connector.version>
+        <core.connector.version>1.4.26</core.connector.version>
+        <jira.connector.version>1.4.26</jira.connector.version>
         <!-- Product specific versions used for testing -->
         <!-- JIRA -->
-        <jira.version>6.2.2</jira.version>
+        <jira.version>6.3.13</jira.version>
         <jira.ao.spi>activeobjects-jira-spi</jira.ao.spi>
         <jira.data.version>${jira.version}</jira.data.version>
         <jira.func-tests.version>${jira.version}</jira.func-tests.version>
